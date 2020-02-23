@@ -4,6 +4,9 @@
  */
 package linkedList;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * @author mr.24
  * @version Id: Main, v 1.0 2020-02-15 22:39 Exp $$
@@ -39,7 +42,7 @@ public class Main {
     }
 
     /**
-     * 翻转链表
+     * 翻转链表（非递归）
      *
      * @param head 头结点
      * @return 链表
@@ -67,11 +70,59 @@ public class Main {
         return preNode;
     }
 
+    /**
+     * 翻转链表（递归）
+     *
+     * @param head 链表
+     * @return 链表
+     */
     public static ListNode recursionReverse(ListNode head) {
         if (head == null || head.next == null)  {
             return head;
         }
 
-        ListNode node = recursionReverse(head.next)
+        ListNode node = recursionReverse(head.next);
+
+        return head;
+    }
+
+    /**
+     * 判断链表是否有环（快慢指针）
+     *
+     * @param head 链表
+     * @return 结果
+     */
+    public static boolean detectWithQuickSlowPointer(ListNode head) {
+        ListNode quick = head;
+        ListNode slow = head;
+
+        while (quick != null && quick.next != null) {
+            quick = quick.next.next;
+            slow = quick;
+            if (quick == slow) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * 判断链表是否有环
+     *
+     * @param head 链表
+     * @return 结果
+     */
+    public static boolean detect(ListNode head) {
+        Set<ListNode> set = new HashSet<>();
+        while (head != null) {
+            if (set.contains(head)) {
+                return true;
+            } else {
+                set.add(head);
+                head = head.next;
+            }
+        }
+        return false;
     }
 }
